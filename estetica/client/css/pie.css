@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Pie de página y contacto
+   ========================================================================== */
+
+.pie {
+  background: var(--rosa-200);
+  color: var(--rosa-900);
+}
+
+.pie-contenido {
+  display: grid;
+  gap: 2.5rem;
+  padding-block: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .pie-contenido {
+    grid-template-columns: 1.3fr 1fr 1.3fr;
+  }
+}
+
+.pie-logo {
+  width: auto;
+  height: 4.5rem;
+}
+
+.pie-frase {
+  margin-top: 0.75rem;
+  color: var(--rosa-700);
+  font-family: var(--fuente-firma);
+  font-size: 1.6rem;
+}
+
+.pie-titulo {
+  margin-bottom: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rosa-700);
+}
+
+.pie-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pie a {
+  text-decoration: none;
+}
+
+.pie a:hover {
+  color: var(--rosa-700);
+}
+
+.pie-mapa {
+  font-weight: 700;
+}
+
+.pie-derechos {
+  padding: 1rem 1rem calc(5.5rem + env(safe-area-inset-bottom, 0px)); /* deja lugar al botón de turnos fijo del celular */
+  border-top: 1px solid rgba(74, 36, 51, 0.12);
+  font-size: 0.85rem;
+  text-align: center;
+  color: var(--rosa-700);
+}
+
+@media (min-width: 768px) {
+  .pie-derechos {
+    padding-bottom: 1rem;
+  }
+}

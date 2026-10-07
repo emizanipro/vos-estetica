@@ -1,0 +1,255 @@
+/* ==========================================================================
+   Base: colores, tipografía y piezas que se repiten en todas las páginas
+   Para cambiar los colores de toda la web, editar solo las variables de :root
+   ========================================================================== */
+
+/* Variables */
+:root {
+  /* Gama de rosados (de más claro a más oscuro) */
+  --rosa-50: #fff8fa;
+  --rosa-100: #fff0f4;
+  --rosa-200: #fddde7;
+  --rosa-300: #f9c3d3;
+  --rosa-400: #f4a6bd;
+  --rosa-500: #ee8dab;
+  --rosa-600: #e07496;
+  --rosa-700: #b03a62; /* rosa fuerte: solo para textos sobre fondo claro (precios, títulos chicos) */
+  --rosa-900: #4a2433;
+
+  /* Nota: el único verde de la web está dentro de las imágenes de banner (img/cat-*.jpg).
+     Todo lo demás usa esta gama de rosados. */
+
+  /* Colores por uso */
+  --color-fondo: var(--rosa-50);
+  --color-superficie: #ffffff;
+  --color-texto: #3a2630;
+  --color-texto-suave: #7a6670;
+  --color-linea: #f3dde5;
+  --color-primario: var(--rosa-400);
+  --color-primario-hover: var(--rosa-500);
+  --color-sobre-primario: var(--rosa-900); /* texto de los botones rosados */
+  --color-oscuro: var(--rosa-900);
+
+  /* Tipografía */
+  --fuente-titulo: "Lora", Georgia, serif;
+  --fuente-texto: "Lato", system-ui, sans-serif;
+  --fuente-firma: "Dancing Script", cursive;
+
+  /* Medidas */
+  --alto-barra: 4.5rem;
+  --alto-franja: 2rem;
+  --ancho-contenido: 72rem;
+  --ancho-amplio: 80rem;
+  --radio: 1.25rem;
+  --sombra-suave: 0 2px 12px rgba(140, 58, 88, 0.08);
+  --sombra-fuerte: 0 14px 34px rgba(140, 58, 88, 0.18);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --alto-barra: 5rem;
+  }
+}
+
+/* Reinicio básico */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Al ir a una sección, deja lugar para el encabezado pegado arriba */
+  scroll-padding-top: calc(var(--alto-barra) + 1rem);
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente-texto);
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  line-height: 1.6;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+dl {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--rosa-600);
+  outline-offset: 2px;
+}
+
+/* Contenedores centrados */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-contenido);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.contenedor-ancho {
+  max-width: var(--ancho-amplio);
+}
+
+@media (min-width: 768px) {
+  .contenedor {
+    padding-inline: 1.5rem;
+  }
+}
+
+/* Títulos de sección */
+.seccion {
+  padding-block: 4rem;
+}
+
+.seccion-cabecera {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.etiqueta {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rosa-700);
+}
+
+.titulo-seccion {
+  margin-top: 0.4rem;
+  font-family: var(--fuente-titulo);
+  font-size: 1.9rem;
+  line-height: 1.2;
+  color: var(--rosa-900);
+}
+
+@media (min-width: 768px) {
+  .titulo-seccion {
+    font-size: 2.5rem;
+  }
+}
+
+/* Botones */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.8rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.boton:hover {
+  transform: translateY(-1px);
+}
+
+.boton-primario {
+  background: var(--color-primario);
+  color: var(--color-sobre-primario);
+}
+
+.boton-primario:hover {
+  background: var(--color-primario-hover);
+}
+
+.boton-claro {
+  background: #fff;
+  color: var(--rosa-700);
+}
+
+.boton-claro:hover {
+  background: var(--rosa-100);
+}
+
+.boton-borde-claro {
+  border-color: #fff;
+  color: #fff;
+}
+
+.boton-borde-claro:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.boton-borde {
+  border-color: var(--rosa-500);
+  color: var(--rosa-700);
+}
+
+.boton-borde:hover {
+  background: var(--color-primario);
+  border-color: var(--color-primario);
+  color: var(--color-sobre-primario);
+}
+
+.boton-chico {
+  padding: 0.55rem 1.2rem;
+  font-size: 0.9rem;
+}
+
+/* Utilidades */
+/* Texto solo para lectores de pantalla (el nombre ya está escrito dentro de la imagen) */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.sin-scroll {
+  overflow: hidden;
+}
+
+.sin-barra {
+  scrollbar-width: none;
+}
+
+.sin-barra::-webkit-scrollbar {
+  display: none;
+}
+
+/* Sin animaciones si la persona lo pide en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    /* necesario: apaga todas las animaciones y transiciones de la web */
+    animation: none !important;
+    transition: none !important;
+  }
+}

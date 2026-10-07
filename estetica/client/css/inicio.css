@@ -1,0 +1,696 @@
+/* ==========================================================================
+   Página de inicio: portada, cinta de servicios, sensaciones, servicios,
+   nosotros, pasos y mapa
+   ========================================================================== */
+
+/* ---------- Portada ---------- */
+.portada {
+  position: relative;
+  display: flex;
+  min-height: 80svh;
+  align-items: center;
+  overflow: hidden;
+  color: #fff;
+}
+
+.portada-imagen {
+  position: absolute;
+  inset: -10% 0;
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+}
+
+.portada-velo {
+  position: absolute;
+  inset: 0;
+  /* Degradé rosado que se esfuma en el 45 % izquierdo, sobre una capa oscura al 60 % para que resalte el texto */
+  background:
+    linear-gradient(
+      90deg,
+      rgba(224, 116, 150, 0.35),
+      rgba(224, 116, 150, 0.27) 8%,
+      rgba(224, 116, 150, 0.17) 18%,
+      rgba(224, 116, 150, 0.08) 30%,
+      rgba(224, 116, 150, 0.02) 40%,
+      rgba(224, 116, 150, 0) 45%
+    ),
+    rgba(0, 0, 0, 0.6);
+}
+
+/* Luces rosadas difusas que flotan detrás del texto */
+.portada-luz {
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 166, 189, 0.45), transparent 70%);
+  pointer-events: none;
+}
+
+.portada-luz-uno {
+  top: -6rem;
+  left: -6rem;
+}
+
+.portada-luz-dos {
+  right: 8%;
+  bottom: 10%;
+  width: 16rem;
+  height: 16rem;
+}
+
+.portada-contenido {
+  position: relative;
+  padding-block: 4.5rem 7rem;
+}
+
+.portada-etiqueta {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.35rem 1rem;
+  border: 1px solid rgba(249, 195, 211, 0.6);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rosa-300);
+  backdrop-filter: blur(4px);
+}
+
+.portada-titulo {
+  max-width: 44rem;
+  font-family: var(--fuente-titulo);
+  font-size: 2.5rem;
+  line-height: 1.1;
+}
+
+.portada-titulo-firma {
+  display: inline-block;
+  padding-right: 0.1em;
+  font-family: var(--fuente-firma);
+  font-size: 1.25em;
+  line-height: 1;
+}
+
+.portada-texto {
+  max-width: 34rem;
+  margin-top: 1.25rem;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.portada-firma {
+  margin-top: 1rem;
+  font-family: var(--fuente-firma);
+  font-size: 1.9rem;
+  color: var(--rosa-300);
+}
+
+.portada-botones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+/* Ola que une la portada con la cinta de abajo */
+.portada-ola {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3.5rem;
+  fill: var(--rosa-200);
+}
+
+/* Indicador para seguir bajando (solo pantalla grande) */
+.portada-bajar {
+  position: absolute;
+  bottom: 4.5rem;
+  left: 50%;
+  display: none;
+  width: 1.7rem;
+  height: 2.7rem;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+
+.portada-bajar::after {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  width: 0.3rem;
+  height: 0.6rem;
+  border-radius: 999px;
+  background: #fff;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 640px) {
+  .portada-botones {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 768px) {
+  .portada {
+    min-height: 88svh;
+  }
+
+  .portada-titulo {
+    font-size: 4.4rem;
+  }
+
+  .portada-firma {
+    font-size: 2.6rem;
+  }
+
+  .portada-ola {
+    height: 5rem;
+  }
+
+  .portada-bajar {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Entrada escalonada del texto de la portada */
+  @keyframes subir {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+  }
+
+  .portada-contenido > * {
+    animation: subir 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .portada-contenido > :nth-child(1) { animation-delay: 0.1s; }
+  .portada-contenido > :nth-child(2) { animation-delay: 0.25s; }
+  .portada-contenido > :nth-child(3) { animation-delay: 0.4s; }
+  .portada-contenido > :nth-child(4) { animation-delay: 0.55s; }
+  .portada-contenido > :nth-child(5) { animation-delay: 0.7s; }
+
+  /* La foto se acerca muy despacio */
+  @keyframes acercar {
+    from {
+      scale: 1;
+    }
+
+    to {
+      scale: 1.1;
+    }
+  }
+
+  .portada-imagen {
+    animation: acercar 22s ease-in-out infinite alternate;
+  }
+
+  @keyframes flotar {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+
+    50% {
+      transform: translate(2rem, 1.5rem);
+    }
+  }
+
+  .portada-luz {
+    animation: flotar 12s ease-in-out infinite;
+  }
+
+  .portada-luz-dos {
+    animation-duration: 16s;
+    animation-direction: reverse;
+  }
+
+  @keyframes rueda {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(-50%, 0.9rem);
+    }
+  }
+
+  .portada-bajar::after {
+    animation: rueda 1.8s ease-in-out infinite;
+  }
+
+  /* Efecto de profundidad al bajar (solo navegadores que lo soportan) */
+  @supports ((animation-timeline: scroll()) and (animation-range: 0 100%)) {
+    @keyframes profundidad {
+      to {
+        translate: 0 8%;
+      }
+    }
+
+    .portada-imagen {
+      animation:
+        acercar 22s ease-in-out infinite alternate,
+        profundidad linear both;
+      animation-timeline: auto, scroll(root);
+      animation-range: normal, 0 90vh;
+    }
+  }
+}
+
+/* ---------- Cinta de servicios que se desliza ---------- */
+.cinta {
+  overflow: hidden;
+  padding-block: 1.1rem;
+  background: var(--rosa-200);
+  color: var(--rosa-900);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.cinta-pista {
+  display: flex;
+  width: max-content;
+}
+
+.cinta-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-right: 1.5rem;
+  font-family: var(--fuente-titulo);
+  font-size: 1.3rem;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.cinta-item::after {
+  content: "✦";
+  font-size: 0.9rem;
+  font-style: normal;
+  color: var(--rosa-600);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes desplazar {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .cinta-pista {
+    animation: desplazar 38s linear infinite;
+  }
+
+  .cinta:hover .cinta-pista {
+    animation-play-state: paused;
+  }
+}
+
+/* ---------- Sensaciones ---------- */
+.sensaciones {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--rosa-50), #fff);
+}
+
+.sensaciones-lista {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.sensacion {
+  position: relative;
+  padding: 2rem 1.75rem;
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  box-shadow: var(--sombra-suave);
+  text-align: center;
+  transition: transform 0.35s, box-shadow 0.35s;
+}
+
+.sensacion:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sombra-fuerte);
+}
+
+.sensacion-icono {
+  display: inline-flex;
+  width: 4.2rem;
+  height: 4.2rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rosa-200), var(--rosa-400));
+  color: var(--rosa-900);
+  box-shadow: 0 8px 20px rgba(244, 166, 189, 0.5);
+}
+
+.sensacion-icono svg {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+.sensacion-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.5rem;
+  color: var(--rosa-900);
+}
+
+.sensacion-texto {
+  margin-top: 0.5rem;
+  color: var(--color-texto-suave);
+}
+
+@media (min-width: 768px) {
+  .sensaciones-lista {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* ---------- Servicios: tarjetas con banner arriba y texto abajo (sin precios) ---------- */
+.grilla-servicios {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.tarjeta-servicio {
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  box-shadow: var(--sombra-suave);
+  text-decoration: none;
+  transition: box-shadow 0.35s, transform 0.35s, border-color 0.35s;
+}
+
+.tarjeta-servicio:hover {
+  transform: translateY(-6px);
+  border-color: var(--rosa-300);
+  box-shadow: 0 18px 40px rgba(224, 116, 150, 0.28);
+}
+
+@media (min-width: 640px) {
+  .tarjeta-servicio {
+    flex: 0 1 calc(50% - 0.75rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tarjeta-servicio {
+    flex: 0 1 calc(33.333% - 1rem);
+  }
+}
+
+.tarjeta-servicio-imagen {
+  position: relative;
+  overflow: hidden;
+}
+
+.tarjeta-servicio-imagen img {
+  width: 100%;
+  aspect-ratio: 5 / 2;
+  object-fit: cover;
+  transition: transform 0.7s;
+}
+
+.tarjeta-servicio:hover img {
+  transform: scale(1.07);
+}
+
+.tarjeta-servicio-cantidad {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.2rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 248, 250, 0.95);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--rosa-700);
+}
+
+.tarjeta-servicio-texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.25rem;
+}
+
+.tarjeta-servicio-descripcion {
+  flex: 1;
+  color: var(--color-texto-suave);
+}
+
+.tarjeta-servicio-enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--rosa-700);
+}
+
+.tarjeta-servicio-enlace::after {
+  content: "→";
+  transition: transform 0.3s;
+}
+
+.tarjeta-servicio:hover .tarjeta-servicio-enlace::after {
+  transform: translateX(6px);
+}
+
+/* ---------- Nosotros ---------- */
+.nosotros {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--rosa-100), #fff 60%);
+}
+
+.nosotros-contenido {
+  display: grid;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Video vertical dentro de un marco de celular */
+.nosotros-media {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.nosotros-media::before {
+  content: "";
+  position: absolute;
+  inset: 8% 6% 4%;
+  border-radius: 50% 50% 45% 55%;
+  background: linear-gradient(160deg, var(--rosa-300), var(--rosa-500));
+  opacity: 0.55;
+  filter: blur(2px);
+  transform: rotate(-8deg);
+}
+
+.celular {
+  position: relative;
+  width: min(16.5rem, 78%);
+  padding: 0.55rem;
+  border-radius: 2.2rem;
+  background: #2b1a22;
+  box-shadow: 0 30px 60px rgba(140, 58, 88, 0.35);
+}
+
+.celular-video {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 1.7rem;
+  background: #000;
+  object-fit: cover;
+}
+
+.celular-etiqueta {
+  position: absolute;
+  right: -1.5rem;
+  bottom: 2.5rem;
+  max-width: 11rem;
+  padding: 0.7rem 1rem;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: var(--sombra-fuerte);
+  font-family: var(--fuente-firma);
+  font-size: 1.35rem;
+  line-height: 1.15;
+  color: var(--rosa-700);
+}
+
+.nosotros-texto p {
+  margin-top: 1rem;
+  color: var(--color-texto-suave);
+}
+
+.nosotros-texto .boton {
+  margin-top: 1.75rem;
+}
+
+/* Números que suben al aparecer */
+.cifras {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cifra {
+  padding: 1rem 0.5rem;
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio);
+  background: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+.cifra-numero {
+  display: block;
+  font-family: var(--fuente-titulo);
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--rosa-700);
+}
+
+.cifra-texto {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: var(--color-texto-suave);
+}
+
+@media (min-width: 768px) {
+  .nosotros-contenido {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 5rem;
+  }
+
+  .cifra-numero {
+    font-size: 2.6rem;
+  }
+}
+
+/* ---------- Pasos para sacar turno ---------- */
+.pasos-lista {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.paso {
+  position: relative;
+  padding: 2rem 1.75rem 1.75rem;
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  box-shadow: var(--sombra-suave);
+  overflow: hidden;
+}
+
+.paso-numero {
+  position: absolute;
+  top: -0.6rem;
+  right: 1rem;
+  font-family: var(--fuente-titulo);
+  font-size: 6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--rosa-200);
+}
+
+.paso-titulo {
+  position: relative;
+  font-family: var(--fuente-titulo);
+  font-size: 1.4rem;
+  color: var(--rosa-900);
+}
+
+.paso-texto {
+  position: relative;
+  margin-top: 0.5rem;
+  color: var(--color-texto-suave);
+}
+
+@media (min-width: 768px) {
+  .pasos-lista {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* ---------- Mapa ---------- */
+.visita {
+  background: #fff;
+}
+
+.visita-contenido {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.visita-datos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.1rem;
+  padding: 2rem;
+  border-radius: var(--radio);
+  background: linear-gradient(160deg, var(--rosa-100), var(--rosa-200));
+}
+
+.visita-dato-titulo {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rosa-700);
+}
+
+.visita-dato-texto {
+  font-size: 1.05rem;
+  color: var(--rosa-900);
+}
+
+.visita-mapa {
+  width: 100%;
+  min-height: 20rem;
+  border: 0;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-fuerte);
+}
+
+@media (min-width: 768px) {
+  .visita-contenido {
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 2rem;
+  }
+
+  .visita-mapa {
+    min-height: 26rem;
+  }
+}

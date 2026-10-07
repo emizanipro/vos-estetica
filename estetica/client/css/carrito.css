@@ -1,0 +1,291 @@
+/* ==========================================================================
+   Carrito de servicios: botón "+" de cada servicio, ícono del encabezado
+   y panel que se abre de derecha a izquierda
+   ========================================================================== */
+
+/* Botón "+" de cada servicio (celular: círculo; pantalla grande: botón con texto) */
+.servicio-precio-columna {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.agregar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  border: 2px solid var(--rosa-500);
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  color: var(--rosa-700);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.agregar:hover {
+  background: var(--rosa-100);
+}
+
+.agregar:active {
+  transform: scale(0.93);
+}
+
+.agregar-icono {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.agregar-texto {
+  display: none;
+  font-size: 0.9rem;
+}
+
+.agregar.en-carrito {
+  border-color: var(--color-primario);
+  background: var(--color-primario);
+  color: var(--color-sobre-primario);
+}
+
+@media (min-width: 1024px) {
+  .servicio-precio-columna {
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
+  .agregar {
+    padding: 0 1.2rem;
+  }
+
+  .agregar-texto {
+    display: inline;
+  }
+}
+
+/* Ícono del carrito en el encabezado (celular: arriba a la derecha) */
+.boton-carrito {
+  position: relative;
+  justify-self: end;
+}
+
+.carrito-contador {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 0.25rem;
+  border-radius: 999px;
+  background: var(--rosa-700);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.15rem;
+  text-align: center;
+  color: #fff;
+}
+
+.carrito-contador[hidden] {
+  display: none;
+}
+
+/* Panel del carrito: espejo del menú hamburguesa, entra por la derecha */
+.fondo-carrito {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  visibility: hidden;
+  opacity: 0;
+  background: rgba(74, 36, 51, 0.5);
+  transition: opacity 0.7s ease, visibility 0.7s;
+}
+
+.fondo-carrito.abierto {
+  visibility: visible;
+  opacity: 1;
+}
+
+.panel-carrito {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  width: 22rem;
+  max-width: 100%;
+  height: 100%;
+  flex-direction: column;
+  background: var(--color-fondo);
+  box-shadow: var(--sombra-fuerte);
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: transform 0.7s ease, visibility 0.7s; /* apertura y cierre lentos, igual que el menú */
+}
+
+.panel-carrito.abierto {
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.carrito-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-linea);
+}
+
+.carrito-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.4rem;
+  color: var(--rosa-900);
+}
+
+.carrito-cuerpo {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.carrito-vacio {
+  padding: 2rem 0.5rem;
+  text-align: center;
+  color: var(--color-texto-suave);
+}
+
+.carrito-vacio[hidden],
+.carrito-total[hidden],
+.carrito-error[hidden] {
+  display: none;
+}
+
+.carrito-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-block: 0.8rem;
+  border-bottom: 1px solid var(--color-linea);
+}
+
+.carrito-item-nombre {
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.carrito-item-detalle {
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+}
+
+.carrito-item-precio {
+  font-weight: 700;
+  color: var(--rosa-700);
+}
+
+.carrito-item-quitar {
+  flex-shrink: 0;
+  padding: 0.4rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+}
+
+.carrito-item-quitar:hover {
+  background: var(--rosa-100);
+  color: var(--rosa-700);
+}
+
+.carrito-item-quitar svg {
+  display: block;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.carrito-total {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: right;
+  color: var(--rosa-900);
+}
+
+/* Datos y botón de enviar, siempre abajo */
+.carrito-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem calc(1rem) calc(1rem + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--color-linea);
+  background: var(--color-superficie);
+}
+
+.carrito-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--rosa-900);
+}
+
+.carrito-campo input {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--rosa-300);
+  border-radius: 0.8rem;
+  background: var(--rosa-50);
+  font: inherit;
+  font-weight: 400;
+  color: var(--color-texto);
+}
+
+.carrito-campo input:focus {
+  border-color: var(--rosa-600);
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--rosa-200);
+}
+
+.carrito-error {
+  font-size: 0.85rem;
+  color: var(--rosa-700);
+}
+
+.carrito-vaciar {
+  align-self: center;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+}
+
+/* Sin servicios: el formulario no se puede usar */
+.carrito-form.sin-servicios {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rebote {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    40% {
+      transform: scale(1.5);
+    }
+  }
+
+  .carrito-contador.rebote {
+    animation: rebote 0.45s ease;
+  }
+}

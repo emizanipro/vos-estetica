@@ -1,0 +1,165 @@
+/* ==========================================================================
+   Efectos: aparición al hacer scroll, brillo de botones, texto con degradé,
+   barra de progreso y animaciones decorativas.
+   Todo se apaga solo si la persona pidió "menos movimiento" en su sistema.
+   ========================================================================== */
+
+/* Aparición al hacer scroll (la clase "js" la agrega una línea en el <head>;
+   js/efectos.js suma "visible" cuando el elemento entra en pantalla) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(1.75rem);
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--retraso, 0s),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--retraso, 0s);
+}
+
+.js .reveal-izquierda {
+  transform: translateX(-2.5rem);
+}
+
+.js .reveal-derecha {
+  transform: translateX(2.5rem);
+}
+
+.js .reveal-zoom {
+  transform: scale(0.93);
+}
+
+.js .reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Texto con degradé rosado que se mueve despacio */
+.texto-degradado {
+  background: linear-gradient(100deg, var(--rosa-300), var(--rosa-500) 35%, var(--rosa-300) 70%, var(--rosa-500));
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Adorno debajo de los títulos de sección */
+.adorno {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+  color: var(--rosa-500);
+  font-size: 0.8rem;
+}
+
+.adorno::before,
+.adorno::after {
+  content: "";
+  width: 3.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rosa-400));
+}
+
+.adorno::after {
+  transform: scaleX(-1);
+}
+
+/* Botón principal con brillo que lo cruza al pasar el mouse */
+.boton-primario,
+.boton-claro {
+  overflow: hidden;
+}
+
+/* (el botón de turnos ya es "fixed" en celular y "relative" en pantalla grande, ver encabezado.css) */
+.boton-primario:not(.boton-turno),
+.boton-claro {
+  position: relative;
+}
+
+.boton-primario::after,
+.boton-claro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.65) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+
+/* Barra de progreso de lectura en el borde del encabezado (solo navegadores que lo soportan) */
+.encabezado::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rosa-300), var(--rosa-600));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes degradado-movil {
+    to {
+      background-position: -250% 0;
+    }
+  }
+
+  .texto-degradado {
+    animation: degradado-movil 9s linear infinite;
+  }
+
+  @keyframes brillo {
+    to {
+      transform: translateX(120%);
+    }
+  }
+
+  .boton-primario:hover::after,
+  .boton-claro:hover::after {
+    animation: brillo 0.8s ease;
+  }
+
+  /* Latido suave del botón de turnos fijo del celular */
+  @keyframes latido {
+    0%,
+    100% {
+      box-shadow: 0 8px 22px rgba(176, 58, 98, 0.35), 0 0 0 0 rgba(244, 166, 189, 0.7);
+    }
+
+    60% {
+      box-shadow: 0 8px 22px rgba(176, 58, 98, 0.35), 0 0 0 0.9rem rgba(244, 166, 189, 0);
+    }
+  }
+
+  .boton-turno {
+    animation: latido 3.2s ease-out infinite;
+  }
+
+  @media (min-width: 768px) {
+    .boton-turno {
+      animation: none;
+    }
+  }
+
+  @supports ((animation-timeline: scroll()) and (animation-range: 0 100%)) {
+    @keyframes progreso {
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    .encabezado::after {
+      animation: progreso linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+/* Sin movimiento: todo aparece de una vez */
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

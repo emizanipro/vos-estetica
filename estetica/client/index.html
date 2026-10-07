@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Vos Estética Integral | Mendoza</title>
+  <meta name="description" content="Vos Estética Integral en Mendoza: uñas, masajes, drenaje linfático, cejas y pestañas, estética facial, tratamientos corporales y trenzas. Un momento para volver a ser vos.">
+  <!-- Marca la página como "con JavaScript" para que los efectos de aparición no oculten nada si el script no carga -->
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Lato:wght@400;700&family=Lora:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/encabezado.css">
+  <link rel="stylesheet" href="css/inicio.css">
+  <link rel="stylesheet" href="css/pie.css">
+  <link rel="stylesheet" href="css/carrito.css">
+  <link rel="stylesheet" href="css/efectos.css">
+</head>
+<body>
+
+  <!-- Encabezado (se dibuja desde js/principal.js) -->
+  <header id="encabezado"></header>
+
+  <main>
+    <!-- Portada -->
+    <section id="inicio" class="portada">
+      <img class="portada-imagen" src="img/portada-1.jpeg" alt="Frente del local de Vos Estética Integral en San Lorenzo 241" fetchpriority="high">
+      <div class="portada-velo"></div>
+      <div class="portada-luz portada-luz-uno" aria-hidden="true"></div>
+      <div class="portada-luz portada-luz-dos" aria-hidden="true"></div>
+
+      <div class="contenedor contenedor-ancho portada-contenido">
+        <p class="portada-etiqueta">Estética integral · Mendoza</p>
+        <h1 class="portada-titulo">Un momento para volver a ser <span class="portada-titulo-firma texto-degradado">vos</span></h1>
+        <p class="portada-texto">Estética facial y corporal, uñas, masajes, cejas y pestañas, trenzas y mucho más, en un solo lugar pensado para que te sientas bien.</p>
+        <p class="portada-firma">Tu bienestar, nuestra prioridad</p>
+        <div class="portada-botones">
+          <a class="boton boton-primario" href="#servicios">Ver servicios</a>
+          <a class="boton boton-borde-claro" href="precios.html">Ver precios</a>
+        </div>
+      </div>
+
+      <span class="portada-bajar" aria-hidden="true"></span>
+      <svg class="portada-ola" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,40 C240,90 480,0 720,30 C960,60 1200,90 1440,40 L1440,80 L0,80 Z"/>
+      </svg>
+    </section>
+
+    <!-- Cinta de servicios que se desliza (la arma js/inicio.js) -->
+    <div class="cinta" aria-hidden="true"><div id="cinta-pista" class="cinta-pista"></div></div>
+
+    <!-- Sensaciones -->
+    <section class="seccion sensaciones">
+      <div class="contenedor contenedor-ancho">
+        <div class="seccion-cabecera reveal">
+          <p class="etiqueta">Para vos</p>
+          <h2 class="titulo-seccion">Cuidarte también es un plan</h2>
+          <p class="adorno" aria-hidden="true">✦</p>
+        </div>
+        <div class="sensaciones-lista" data-reveal-grupo>
+          <article class="sensacion">
+            <span class="sensacion-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+            <h3 class="sensacion-titulo">Desconectá</h3>
+            <p class="sensacion-texto">Un rato para vos, lejos de las corridas del día. Cerrá los ojos y dejate cuidar.</p>
+          </article>
+          <article class="sensacion">
+            <span class="sensacion-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg></span>
+            <h3 class="sensacion-titulo">Renová</h3>
+            <p class="sensacion-texto">Tratamientos pensados para cuidar tu piel y tu cuerpo, con atención en cada detalle.</p>
+          </article>
+          <article class="sensacion">
+            <span class="sensacion-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v2.5M12 20v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M1.5 12H4M20 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg></span>
+            <h3 class="sensacion-titulo">Brillá</h3>
+            <p class="sensacion-texto">Salí con ganas de mostrarlo: sentirte bien por dentro se nota por fuera.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios (tarjetas que arma js/inicio.js) -->
+    <section id="servicios" class="seccion contenedor contenedor-ancho">
+      <div class="seccion-cabecera reveal">
+        <p class="etiqueta">Lo que hacemos</p>
+        <h2 class="titulo-seccion">Elegí tu momento</h2>
+        <p class="adorno" aria-hidden="true">✦</p>
+      </div>
+      <div id="tarjetas-servicios" class="grilla-servicios" data-reveal-grupo></div>
+    </section>
+
+    <!-- Nosotros -->
+    <section id="nosotros" class="seccion nosotros">
+      <div class="contenedor contenedor-ancho nosotros-contenido">
+        <div class="nosotros-media reveal reveal-izquierda">
+          <div class="celular">
+            <video id="video-local" class="celular-video" src="img/video-estetica-1.mp4" poster="img/portada-1.jpeg" autoplay muted loop playsinline preload="metadata"></video>
+            <p class="celular-etiqueta">Pasá a conocernos</p>
+          </div>
+        </div>
+        <div class="nosotros-texto reveal reveal-derecha">
+          <p class="etiqueta">Nosotros</p>
+          <h2 class="titulo-seccion">Un lugar para cuidarte</h2>
+          <p>En Vos Estética Integral reunimos tratamientos faciales y corporales, uñas, masajes, cejas y pestañas y trenzas en un espacio cálido, en pleno centro de Mendoza.</p>
+          <p>Cada visita es un momento tuyo. Te ayudamos a elegir el servicio y el horario que mejor se adapte a vos.</p>
+
+          <div class="cifras" aria-label="Nuestros números">
+            <p class="cifra"><span class="cifra-numero" data-contador="categorias">0</span><span class="cifra-texto">categorías de servicios</span></p>
+            <p class="cifra"><span class="cifra-numero" data-contador="servicios">0</span><span class="cifra-texto">servicios para elegir</span></p>
+            <p class="cifra"><span class="cifra-numero" data-contador="12">0</span><span class="cifra-texto">horas para tu turno, de 9 a 21</span></p>
+          </div>
+
+          <a class="boton boton-primario" href="precios.html">Ver servicios y precios</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pasos para sacar turno -->
+    <section class="seccion contenedor contenedor-ancho">
+      <div class="seccion-cabecera reveal">
+        <p class="etiqueta">Es muy simple</p>
+        <h2 class="titulo-seccion">Tu turno en 3 pasos</h2>
+        <p class="adorno" aria-hidden="true">✦</p>
+      </div>
+      <div class="pasos-lista" data-reveal-grupo>
+        <article class="paso">
+          <span class="paso-numero" aria-hidden="true">1</span>
+          <h3 class="paso-titulo">Elegí tu servicio</h3>
+          <p class="paso-texto">Mirá la lista de servicios y precios y encontrá lo que más te late.</p>
+        </article>
+        <article class="paso">
+          <span class="paso-numero" aria-hidden="true">2</span>
+          <h3 class="paso-titulo">Pedí tu turno</h3>
+          <p class="paso-texto">Con el botón de turnos nos escribís y coordinamos el día y la hora.</p>
+        </article>
+        <article class="paso">
+          <span class="paso-numero" aria-hidden="true">3</span>
+          <h3 class="paso-titulo">Disfrutá</h3>
+          <p class="paso-texto">Vení y dedicate un rato. Es tu momento, nosotras nos ocupamos del resto.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Cómo llegar -->
+    <section class="seccion visita">
+      <div class="contenedor contenedor-ancho">
+        <div class="seccion-cabecera reveal">
+          <p class="etiqueta">Cómo llegar</p>
+          <h2 class="titulo-seccion">Te esperamos</h2>
+          <p class="adorno" aria-hidden="true">✦</p>
+        </div>
+        <div class="visita-contenido" data-reveal-grupo>
+          <div class="visita-datos">
+            <div><p class="visita-dato-titulo">Dirección</p><p class="visita-dato-texto" data-direccion></p></div>
+            <div><p class="visita-dato-titulo">Horarios</p><p class="visita-dato-texto" data-horarios></p></div>
+            <a class="boton boton-borde" data-mapa href="#" target="_blank" rel="noopener">Abrir en Google Maps</a>
+          </div>
+          <iframe class="visita-mapa" title="Mapa de Vos Estética Integral" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=San+Lorenzo+241,+Mendoza,+Argentina&amp;output=embed"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie y contacto (se dibuja desde js/principal.js) -->
+  <footer id="pie"></footer>
+
+  <script src="js/datos.js"></script>
+  <script src="js/principal.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/inicio.js"></script>
+  <script src="js/efectos.js"></script>
+</body>
+</html>

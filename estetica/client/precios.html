@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es-AR" class="con-accesos">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Servicios y precios | Vos Estética Integral</title>
+  <meta name="description" content="Lista de servicios, duración y precios de Vos Estética Integral en Mendoza.">
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Lato:wght@400;700&family=Lora:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/encabezado.css">
+  <link rel="stylesheet" href="css/precios.css">
+  <link rel="stylesheet" href="css/inicio.css">
+  <link rel="stylesheet" href="css/pie.css">
+  <link rel="stylesheet" href="css/carrito.css">
+  <link rel="stylesheet" href="css/efectos.css">
+</head>
+<body>
+
+  <!-- Encabezado (se dibuja desde js/principal.js) -->
+  <header id="encabezado"></header>
+
+  <main>
+    <!-- Banner del título -->
+    <section class="titulo-pagina">
+      <span class="titulo-pagina-luz titulo-pagina-luz-uno" aria-hidden="true"></span>
+      <span class="titulo-pagina-luz titulo-pagina-luz-dos" aria-hidden="true"></span>
+      <div class="titulo-pagina-contenido">
+        <p class="etiqueta">Vos Estética Integral</p>
+        <h1 class="titulo-pagina-texto">Elegí tu <span class="titulo-pagina-firma">momento</span></h1>
+        <p class="titulo-pagina-detalle">Servicios y precios. Los precios pueden cambiar, consultanos por WhatsApp.</p>
+      </div>
+    </section>
+
+    <!-- Barra de categorías pegada arriba -->
+    <nav class="accesos" aria-label="Categorías">
+      <div id="accesos" class="contenedor contenedor-ancho accesos-lista sin-barra"></div>
+    </nav>
+
+    <!-- Servicios (se arman desde js/datos.js) -->
+    <div id="servicios" class="contenedor contenedor-ancho categorias"></div>
+  </main>
+
+  <!-- Pie y contacto (se dibuja desde js/principal.js) -->
+  <footer id="pie"></footer>
+
+  <script src="js/datos.js"></script>
+  <script src="js/principal.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/precios.js"></script>
+  <script src="js/efectos.js"></script>
+</body>
+</html>
