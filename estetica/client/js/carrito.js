@@ -74,8 +74,111 @@ function CalcularTotal() {
   return { total: total, desde: desde };
 }
 
+// ---------- Día y horario ----------
+var MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+var DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+var MESES_ADELANTE = 3; // hasta cuántos meses a futuro se puede reservar
+
+var mesVista = null; // primer día del mes que se muestra en el calendario
+var fechaElegida = null;
+var horaElegida = "";
+
+function InicioDeHoy() {
+  var hoy = new Date();
+  return new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+}
+
+function MismoDia(a, b) {
+  return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+// "jueves 15 de octubre"
+function TextoFecha(fecha) {
+  return DIAS[fecha.getDay()] + " " + fecha.getDate() + " de " + MESES[fecha.getMonth()];
+}
+
+// Dibuja el mes del calendario
+function DibujarCalendario() {
+  var hoy = InicioDeHoy();
+  var primerMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+  var ultimoMes = new Date(hoy.getFullYear(), hoy.getMonth() + MESES_ADELANTE, 1);
+
+  document.getElementById("calendario-titulo").textContent = MESES[mesVista.getMonth()] + " " + mesVista.getFullYear();
+  document.getElementById("calendario-anterior").disabled = mesVista <= primerMes;
+  document.getElementById("calendario-siguiente").disabled = mesVista >= ultimoMes;
+
+  var contenedor = document.getElementById("calendario-dias");
+  contenedor.innerHTML = "";
+  var vacios = (mesVista.getDay() + 6) % 7; // la semana empieza en lunes
+  for (var i = 0; i < vacios; i++) contenedor.appendChild(CrearElemento("span"));
+
+  var cantidad = new Date(mesVista.getFullYear(), mesVista.getMonth() + 1, 0).getDate();
+  for (var dia = 1; dia <= cantidad; dia++) {
+    contenedor.appendChild(CrearBotonDia(new Date(mesVista.getFullYear(), mesVista.getMonth(), dia), hoy));
+  }
+}
+
+function CrearBotonDia(fecha, hoy) {
+  var boton = CrearElemento("button", "calendario-dia", fecha.getDate());
+  boton.type = "button";
+  boton.disabled = fecha < hoy;
+  boton.setAttribute("aria-label", TextoFecha(fecha));
+  if (MismoDia(fecha, hoy)) boton.classList.add("hoy");
+  var elegido = MismoDia(fecha, fechaElegida);
+  boton.classList.toggle("elegido", elegido);
+  boton.setAttribute("aria-pressed", elegido ? "true" : "false");
+  boton.addEventListener("click", function () {
+    fechaElegida = fecha;
+    DibujarCalendario();
+    DibujarHorarios();
+    LimpiarError();
+  });
+  return boton;
+}
+
+// Dibuja los horarios disponibles (uno por hora)
+function DibujarHorarios() {
+  var contenedor = document.getElementById("horarios");
+  contenedor.innerHTML = "";
+  var ahora = new Date();
+  var esHoy = MismoDia(fechaElegida, ahora);
+  if (horaElegida && esHoy && parseInt(horaElegida, 10) <= ahora.getHours()) horaElegida = "";
+
+  for (var hora = DATOS_NEGOCIO.horaApertura; hora < DATOS_NEGOCIO.horaCierre; hora++) {
+    var texto = hora + ":00";
+    var boton = CrearElemento("button", "horario", texto);
+    boton.type = "button";
+    boton.disabled = !fechaElegida || (esHoy && hora <= ahora.getHours());
+    boton.classList.toggle("elegido", texto === horaElegida);
+    boton.setAttribute("aria-pressed", texto === horaElegida ? "true" : "false");
+    boton.addEventListener("click", ElegirHora.bind(null, texto));
+    contenedor.appendChild(boton);
+  }
+}
+
+function ElegirHora(texto) {
+  horaElegida = texto;
+  DibujarHorarios();
+  LimpiarError();
+}
+
+function LimpiarError() {
+  document.getElementById("carrito-error").hidden = true;
+}
+
+function MostrarError(texto, campo) {
+  var error = document.getElementById("carrito-error");
+  error.textContent = texto;
+  error.hidden = false;
+  if (campo) campo.focus();
+}
+
 // ---------- Mensaje de WhatsApp ----------
-function CrearMensaje(nombre, preferencia) {
+function CalcularSenia(total) {
+  return Math.round((total * DATOS_NEGOCIO.seniaPorcentaje) / 100);
+}
+
+function CrearMensaje(nombre) {
   var lineas = ["Hola! Soy " + nombre + ". Quiero reservar estos servicios:", ""];
   carrito.forEach(function (servicio) {
     var detalle = servicio.nombre;
@@ -85,8 +188,11 @@ function CrearMensaje(nombre, preferencia) {
     lineas.push("• " + detalle + ": " + servicio.precio);
   });
   var suma = CalcularTotal();
-  lineas.push("", "Total estimado: " + (suma.desde ? "desde " : "") + FormatearPrecio(suma.total));
-  if (preferencia) lineas.push("Día y horario preferido: " + preferencia);
+  var desde = suma.desde ? "desde " : "";
+  lineas.push("", "Total estimado: " + desde + FormatearPrecio(suma.total));
+  lineas.push("Seña (" + DATOS_NEGOCIO.seniaPorcentaje + "%): " + desde + FormatearPrecio(CalcularSenia(suma.total)));
+  lineas.push("", "Día elegido: " + TextoFecha(fechaElegida));
+  lineas.push("Horario elegido: " + horaElegida + " hs");
   lineas.push("", "¿Me pasan los datos para abonar la seña? Gracias!");
   return lineas.join("\n");
 }
@@ -121,26 +227,50 @@ function DibujarPanelCarrito() {
   var panel = CrearElemento("aside", "panel-carrito");
   panel.id = "panel-carrito";
   panel.setAttribute("aria-label", "Carrito de servicios");
+
+  var dias = ["L", "M", "M", "J", "V", "S", "D"].map(function (letra) {
+    return "<span>" + letra + "</span>";
+  }).join("");
+
   panel.innerHTML =
     '<div class="carrito-cabecera">' +
       '<h2 class="carrito-titulo">Tus servicios</h2>' +
       '<button id="boton-cerrar-carrito" class="boton-icono" type="button" aria-label="Cerrar carrito">' + ICONO_CERRAR + "</button>" +
     "</div>" +
-    '<div class="carrito-cuerpo">' +
-      '<p id="carrito-vacio" class="carrito-vacio">Todavía no elegiste servicios. Tocá el <strong>+</strong> en los que te gusten.</p>' +
-      '<ul id="carrito-lista" class="carrito-lista"></ul>' +
-      '<p id="carrito-total" class="carrito-total" hidden></p>' +
-    "</div>" +
     '<form id="carrito-form" class="carrito-form" novalidate>' +
-      '<label class="carrito-campo">Tu nombre' +
-        '<input id="carrito-nombre" type="text" autocomplete="name" placeholder="Ej: María" required>' +
-      "</label>" +
-      '<label class="carrito-campo">Día y horario preferido (opcional)' +
-        '<input id="carrito-preferencia" type="text" placeholder="Ej: jueves por la tarde">' +
-      "</label>" +
-      '<p id="carrito-error" class="carrito-error" role="alert" hidden>Escribí tu nombre para continuar.</p>' +
-      '<button type="submit" class="boton boton-primario carrito-enviar">Enviar por WhatsApp</button>' +
-      '<button id="carrito-vaciar" class="carrito-vaciar" type="button">Vaciar carrito</button>' +
+      '<div class="carrito-scroll">' +
+        '<p id="carrito-vacio" class="carrito-vacio">Todavía no elegiste servicios. Tocá el <strong>+</strong> en los que te gusten.</p>' +
+        '<ul id="carrito-lista" class="carrito-lista"></ul>' +
+        '<div id="carrito-total" class="carrito-total" hidden>' +
+          '<p id="carrito-total-texto"></p>' +
+          '<p id="carrito-senia" class="carrito-senia"></p>' +
+        "</div>" +
+        '<div id="carrito-datos" class="carrito-datos">' +
+          '<label class="carrito-campo">Tu nombre' +
+            '<input id="carrito-nombre" type="text" autocomplete="off" placeholder="Ej: María" required>' +
+          "</label>" +
+          '<div class="carrito-campo"><span id="calendario-etiqueta">Elegí el día</span>' +
+            '<div class="calendario" role="group" aria-labelledby="calendario-etiqueta">' +
+              '<div class="calendario-cabecera">' +
+                '<button id="calendario-anterior" class="calendario-flecha" type="button" aria-label="Mes anterior">‹</button>' +
+                '<p id="calendario-titulo" class="calendario-titulo" aria-live="polite"></p>' +
+                '<button id="calendario-siguiente" class="calendario-flecha" type="button" aria-label="Mes siguiente">›</button>' +
+              "</div>" +
+              '<div class="calendario-semana" aria-hidden="true">' + dias + "</div>" +
+              '<div id="calendario-dias" class="calendario-dias"></div>' +
+            "</div>" +
+          "</div>" +
+          '<div class="carrito-campo"><span id="horarios-etiqueta">Elegí el horario</span>' +
+            '<div id="horarios" class="horarios" role="group" aria-labelledby="horarios-etiqueta"></div>' +
+            '<p class="carrito-ayuda">Te confirmamos el turno por WhatsApp.</p>' +
+          "</div>" +
+        "</div>" +
+      "</div>" +
+      '<div id="carrito-pie" class="carrito-pie">' +
+        '<p id="carrito-error" class="carrito-error" role="alert" hidden></p>' +
+        '<button type="submit" class="boton boton-primario carrito-enviar">Enviar por WhatsApp</button>' +
+        '<button id="carrito-vaciar" class="carrito-vaciar" type="button">Vaciar carrito</button>' +
+      "</div>" +
     "</form>";
 
   document.body.appendChild(fondo);
@@ -184,11 +314,12 @@ function ActualizarCarrito(animar) {
   document.getElementById("carrito-vacio").hidden = !vacio;
   document.getElementById("carrito-form").classList.toggle("sin-servicios", vacio);
 
-  var total = document.getElementById("carrito-total");
-  total.hidden = vacio;
+  document.getElementById("carrito-total").hidden = vacio;
   if (!vacio) {
     var suma = CalcularTotal();
-    total.textContent = "Total estimado: " + (suma.desde ? "desde " : "") + FormatearPrecio(suma.total);
+    var desde = suma.desde ? "desde " : "";
+    document.getElementById("carrito-total-texto").textContent = "Total estimado: " + desde + FormatearPrecio(suma.total);
+    document.getElementById("carrito-senia").textContent = "Seña (" + DATOS_NEGOCIO.seniaPorcentaje + "%): " + desde + FormatearPrecio(CalcularSenia(suma.total));
   }
 
   var contador = document.getElementById("carrito-contador");
@@ -211,10 +342,6 @@ function ActualizarCarrito(animar) {
     boton.querySelector(".agregar-icono").textContent = dentro ? "✓" : "+";
     boton.querySelector(".agregar-texto").textContent = dentro ? "Agregado" : "Agregar";
   });
-
-  if (vacio && document.getElementById("panel-carrito").classList.contains("abierto")) {
-    // se queda abierto mostrando el aviso de carrito vacío
-  }
 }
 
 // ---------- Abrir y cerrar ----------
@@ -235,24 +362,16 @@ function CerrarCarrito() {
 // Envía el pedido: abre WhatsApp con el mensaje armado
 function EnviarCarrito(evento) {
   evento.preventDefault();
-  var nombre = document.getElementById("carrito-nombre").value.trim();
-  var preferencia = document.getElementById("carrito-preferencia").value.trim();
-  var error = document.getElementById("carrito-error");
-
   if (carrito.length === 0) return;
-  if (!nombre) {
-    error.hidden = false;
-    document.getElementById("carrito-nombre").focus();
-    return;
-  }
-  error.hidden = true;
-  try {
-    localStorage.setItem("vos-nombre", nombre);
-  } catch (errorAlmacen) {
-    // no es grave
-  }
 
-  var enlace = "https://wa.me/" + DATOS_NEGOCIO.whatsappNumero + "?text=" + encodeURIComponent(CrearMensaje(nombre, preferencia));
+  var campoNombre = document.getElementById("carrito-nombre");
+  var nombre = campoNombre.value.trim();
+  if (!nombre) return MostrarError("Escribí tu nombre para continuar.", campoNombre);
+  if (!fechaElegida) return MostrarError("Elegí el día en el calendario.");
+  if (!horaElegida) return MostrarError("Elegí el horario.");
+
+  LimpiarError();
+  var enlace = "https://wa.me/" + DATOS_NEGOCIO.whatsappNumero + "?text=" + encodeURIComponent(CrearMensaje(nombre));
   var ventana = window.open(enlace, "_blank", "noopener");
   if (!ventana) window.location.href = enlace;
 }
@@ -267,15 +386,27 @@ function IniciarCarrito() {
   document.getElementById("fondo-carrito").addEventListener("click", CerrarCarrito);
   document.getElementById("carrito-form").addEventListener("submit", EnviarCarrito);
   document.getElementById("carrito-vaciar").addEventListener("click", VaciarCarrito);
-  document.getElementById("carrito-nombre").addEventListener("input", function () {
-    document.getElementById("carrito-error").hidden = true;
+  document.getElementById("carrito-nombre").addEventListener("input", LimpiarError);
+
+  var hoy = InicioDeHoy();
+  mesVista = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+  document.getElementById("calendario-anterior").addEventListener("click", function () {
+    mesVista = new Date(mesVista.getFullYear(), mesVista.getMonth() - 1, 1);
+    DibujarCalendario();
   });
+  document.getElementById("calendario-siguiente").addEventListener("click", function () {
+    mesVista = new Date(mesVista.getFullYear(), mesVista.getMonth() + 1, 1);
+    DibujarCalendario();
+  });
+  DibujarCalendario();
+  DibujarHorarios();
   document.addEventListener("keydown", function (evento) {
     if (evento.key === "Escape") CerrarCarrito();
   });
 
+  // El nombre ya no se guarda: se borra el que haya quedado de antes
   try {
-    document.getElementById("carrito-nombre").value = localStorage.getItem("vos-nombre") || "";
+    localStorage.removeItem("vos-nombre");
   } catch (error) {
     // sin almacenamiento
   }

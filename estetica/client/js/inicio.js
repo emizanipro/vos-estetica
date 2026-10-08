@@ -5,10 +5,10 @@ function CrearTarjeta(servicio) {
   var tarjeta = CrearElemento("a", "tarjeta-servicio");
   tarjeta.href = EnlaceCategoria(servicio.id);
 
-  // Banner de la categoría (el nombre está escrito dentro de la imagen)
+  // Imagen de la tarjeta (img/tarjeta-<id>.jpg) con un fondo oscuro suave y el nombre encima
   var contenedorImagen = CrearElemento("div", "tarjeta-servicio-imagen");
   var imagen = CrearElemento("img");
-  imagen.src = servicio.imagen;
+  imagen.src = "img/tarjeta-" + servicio.id + ".jpg";
   imagen.alt = "";
   imagen.loading = "lazy";
   contenedorImagen.appendChild(imagen);
@@ -16,10 +16,10 @@ function CrearTarjeta(servicio) {
   // Etiqueta con la cantidad de servicios de la categoría
   var cantidad = CantidadServicios(servicio);
   contenedorImagen.appendChild(CrearElemento("span", "tarjeta-servicio-cantidad", cantidad + (cantidad === 1 ? " servicio" : " servicios")));
+  contenedorImagen.appendChild(CrearElemento("h3", "tarjeta-servicio-nombre", servicio.nombre));
   tarjeta.appendChild(contenedorImagen);
 
   var texto = CrearElemento("div", "tarjeta-servicio-texto");
-  texto.appendChild(CrearElemento("h3", "solo-lectores", servicio.nombre));
   texto.appendChild(CrearElemento("p", "tarjeta-servicio-descripcion", servicio.descripcion));
   texto.appendChild(CrearElemento("span", "tarjeta-servicio-enlace", "Ver precios y turnos"));
   tarjeta.appendChild(texto);
@@ -65,7 +65,44 @@ function ControlarVideo() {
   }
 }
 
+// Preguntas frecuentes: una lista que se abre y cierra
+function DibujarPreguntas() {
+  var contenedor = document.getElementById("preguntas-lista");
+  PREGUNTAS.forEach(function (item) {
+    var detalle = CrearElemento("details", "pregunta");
+    detalle.appendChild(CrearElemento("summary", "pregunta-titulo", item.pregunta));
+    detalle.appendChild(CrearElemento("p", "pregunta-respuesta", item.respuesta));
+    contenedor.appendChild(detalle);
+  });
+}
+
+// Datos para Google (negocio local). Se completan solos con js/datos.js
+function AgregarDatosParaGoogle() {
+  var datos = {
+    "@context": "https://schema.org",
+    "@type": "BeautySalon",
+    name: "Vos Estética Integral",
+    description: "Uñas, masajes, drenaje linfático, cejas y pestañas, estética facial, tratamientos corporales y trenzas en Mendoza.",
+    telephone: "+" + DATOS_NEGOCIO.whatsappNumero,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "San Lorenzo 241",
+      addressLocality: "Mendoza",
+      addressRegion: "Mendoza",
+      postalCode: "5500",
+      addressCountry: "AR"
+    },
+    sameAs: [DATOS_NEGOCIO.instagramUrl]
+  };
+  var script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(datos);
+  document.head.appendChild(script);
+}
+
 DibujarTarjetas();
 DibujarCinta();
+DibujarPreguntas();
+AgregarDatosParaGoogle();
 CompletarCifras();
 ControlarVideo();

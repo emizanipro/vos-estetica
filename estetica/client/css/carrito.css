@@ -146,10 +146,19 @@
   color: var(--rosa-900);
 }
 
-.carrito-cuerpo {
+/* Formulario: la parte de arriba se desliza y el botón de enviar queda siempre abajo */
+.carrito-form {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.carrito-scroll {
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .carrito-vacio {
@@ -217,20 +226,29 @@
   color: var(--rosa-900);
 }
 
-/* Datos y botón de enviar, siempre abajo */
-.carrito-form {
+.carrito-total p {
+  margin: 0;
+}
+
+.carrito-senia {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--rosa-700);
+}
+
+.carrito-datos {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 1rem calc(1rem) calc(1rem + env(safe-area-inset-bottom, 0px));
+  gap: 1.1rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
   border-top: 1px solid var(--color-linea);
-  background: var(--color-superficie);
 }
 
 .carrito-campo {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.4rem;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--rosa-900);
@@ -252,8 +270,145 @@
   box-shadow: 0 0 0 3px var(--rosa-200);
 }
 
+.carrito-ayuda {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-texto-suave);
+}
+
+/* Calendario */
+.calendario {
+  padding: 0.75rem;
+  border: 1px solid var(--rosa-300);
+  border-radius: 1rem;
+  background: var(--color-superficie);
+}
+
+.calendario-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.calendario-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.05rem;
+  text-transform: capitalize;
+  color: var(--rosa-900);
+}
+
+.calendario-flecha {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--rosa-700);
+  cursor: pointer;
+}
+
+.calendario-flecha:hover:not(:disabled) {
+  background: var(--rosa-100);
+}
+
+.calendario-flecha:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.calendario-semana,
+.calendario-dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.2rem;
+  text-align: center;
+}
+
+.calendario-semana {
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-texto-suave);
+}
+
+.calendario-dia {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--color-texto);
+  cursor: pointer;
+}
+
+.calendario-dia:hover:not(:disabled) {
+  background: var(--rosa-100);
+}
+
+.calendario-dia:disabled {
+  color: #c9b8bf;
+  cursor: default;
+}
+
+.calendario-dia.hoy {
+  border-color: var(--rosa-400);
+}
+
+.calendario-dia.elegido,
+.horario.elegido {
+  border-color: var(--color-primario);
+  background: var(--color-primario);
+  font-weight: 700;
+  color: var(--color-sobre-primario);
+}
+
+/* Horarios */
+.horarios {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+}
+
+.horario {
+  padding: 0.5rem 0;
+  border: 1px solid var(--rosa-300);
+  border-radius: 0.7rem;
+  background: var(--color-superficie);
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--rosa-700);
+  cursor: pointer;
+}
+
+.horario:hover:not(:disabled) {
+  background: var(--rosa-100);
+}
+
+.horario:disabled {
+  border-color: var(--color-linea);
+  color: #c9b8bf;
+  cursor: default;
+}
+
+/* Botón de enviar, siempre abajo */
+.carrito-pie {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.9rem 1rem calc(0.9rem + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--color-linea);
+  background: var(--color-superficie);
+}
+
 .carrito-error {
   font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
   color: var(--rosa-700);
 }
 
@@ -268,8 +423,9 @@
   cursor: pointer;
 }
 
-/* Sin servicios: el formulario no se puede usar */
-.carrito-form.sin-servicios {
+/* Sin servicios: solo se muestra el aviso */
+.carrito-form.sin-servicios .carrito-datos,
+.carrito-form.sin-servicios .carrito-pie {
   display: none;
 }
 

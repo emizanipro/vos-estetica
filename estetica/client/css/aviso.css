@@ -1,0 +1,41 @@
+/* ==========================================================================
+   Aviso de almacenamiento (cookies): cartel chico abajo
+   ========================================================================== */
+
+.aviso {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  left: 1rem;
+  z-index: 38; /* sobre el botón de turnos (35), debajo de los paneles (40 y 50) */
+  display: flex;
+  max-width: 28rem;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rosa-200);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  box-shadow: var(--sombra-fuerte);
+  font-size: 0.88rem;
+  color: var(--color-texto);
+}
+
+.aviso[hidden] {
+  display: none;
+}
+
+.aviso a {
+  color: var(--rosa-700);
+  font-weight: 700;
+}
+
+.aviso-boton {
+  align-self: flex-end;
+}
+
+@media (min-width: 768px) {
+  .aviso {
+    right: auto;
+  }
+}

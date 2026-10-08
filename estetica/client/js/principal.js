@@ -2,6 +2,8 @@
 
 var PAGINA_INICIO = "index.html";
 var PAGINA_PRECIOS = "precios.html";
+var PAGINA_CUIDADOS = "cuidados.html";
+var PAGINA_PRIVACIDAD = "privacidad.html";
 
 // Ícono de mensaje (se usa en los botones de turno)
 var ICONO_MENSAJE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.1-4.6A8 8 0 1 1 21 12Z"/></svg>';
@@ -40,8 +42,11 @@ function DibujarEncabezado() {
 
   // Marca la página actual en el menú
   var esPrecios = location.pathname.indexOf("precios") !== -1;
-  var actualInicio = esPrecios ? "" : ' aria-current="page"';
+  var esCuidados = location.pathname.indexOf("cuidados") !== -1;
+  var esPrivacidad = location.pathname.indexOf("privacidad") !== -1;
+  var actualInicio = esPrecios || esCuidados || esPrivacidad ? "" : ' aria-current="page"';
   var actualPrecios = esPrecios ? ' aria-current="page"' : "";
+  var actualCuidados = esCuidados ? ' aria-current="page"' : "";
 
   cabecera.innerHTML =
     // Franja superior con datos útiles (solo pantalla grande)
@@ -65,6 +70,7 @@ function DibujarEncabezado() {
           '<div id="menu-servicios" class="mega"><div class="mega-caja">' + CrearMegaMenu() + "</div></div>" +
         "</div>" +
         '<a class="nav-enlace" href="' + PAGINA_PRECIOS + '"' + actualPrecios + ">Precios</a>" +
+        '<a class="nav-enlace" href="' + PAGINA_CUIDADOS + '"' + actualCuidados + ">Cuidados</a>" +
         '<a class="nav-enlace" href="' + PAGINA_INICIO + '#nosotros">Nosotros</a>' +
         '<a class="nav-enlace" href="#contacto">Contacto</a>' +
       "</nav>" +
@@ -122,6 +128,8 @@ function DibujarPanelMovil() {
   });
 
   lista.appendChild(CrearElemento("p", "panel-grupo panel-grupo-borde", "Más"));
+  lista.appendChild(CrearEnlaceMenu("Cuidados", PAGINA_CUIDADOS, "panel-enlace"));
+  lista.appendChild(CrearEnlaceMenu("Preguntas frecuentes", PAGINA_INICIO + "#preguntas", "panel-enlace"));
   lista.appendChild(CrearEnlaceMenu("Nosotros", PAGINA_INICIO + "#nosotros", "panel-enlace"));
   lista.appendChild(CrearEnlaceMenu("Contacto", "#contacto", "panel-enlace"));
   panel.appendChild(lista);
@@ -168,7 +176,12 @@ function DibujarPie() {
         "</ul>" +
       "</div>" +
     "</div>" +
-    '<p class="pie-derechos">© ' + new Date().getFullYear() + " Vos Estética Integral · Mendoza</p>";
+    '<p class="pie-derechos">© ' + new Date().getFullYear() + " Vos Estética Integral · Mendoza" +
+      '<span class="pie-derechos-enlaces">' +
+        '<a href="' + PAGINA_INICIO + '#preguntas">Preguntas frecuentes</a>' +
+        '<a href="' + PAGINA_CUIDADOS + '">Cuidados</a>' +
+        '<a href="' + PAGINA_PRIVACIDAD + '">Política de privacidad</a>' +
+      "</span></p>";
 }
 
 // Abre el menú del celular

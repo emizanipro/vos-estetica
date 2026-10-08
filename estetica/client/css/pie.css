@@ -71,3 +71,16 @@
     padding-bottom: 1rem;
   }
 }
+
+/* Enlaces legales debajo del pie */
+.pie-derechos-enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.25rem;
+  margin-top: 0.4rem;
+}
+
+.pie-derechos-enlaces a:hover {
+  text-decoration: underline;
+}

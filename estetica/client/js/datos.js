@@ -1,12 +1,15 @@
 // Datos del negocio (para cambiar el WhatsApp, editar solo acá)
 var DATOS_NEGOCIO = {
-  whatsappNumero: "5492616094081",
-  whatsappTexto: "+54 261 609 4081",
+  whatsappNumero: "5492617772649",
+  whatsappTexto: "+54 261 777 2649",
   whatsappMensaje: "Hola! Quiero consultar por un turno en Vos Estética Integral.",
   instagramUrl: "https://www.instagram.com/vos.esteticamza/",
   instagramUsuario: "@vos.esteticamza",
   direccion: "San Lorenzo 241, Mendoza, CP 5500, Argentina",
-  horarios: "De 9:00 a 21:00 h"
+  horarios: "De 9:00 a 21:00 h",
+  horaApertura: 9, // primer horario que se puede elegir en el carrito
+  horaCierre: 21, // el último turno se ofrece una hora antes
+  seniaPorcentaje: 25 // porcentaje de seña sobre el costo del servicio
 };
 
 var COLUMNAS_BASE = ["Servicio", "Duración", "Precio"];
@@ -163,3 +166,119 @@ var SERVICIOS = [
     ]
   }
 ];
+
+// Preguntas frecuentes (se muestran en la página de inicio)
+var PREGUNTAS = [
+  {
+    pregunta: "¿Cómo reservo un turno?",
+    respuesta: "Elegí tus servicios en la página de Precios con el botón +, abrí el carrito, elegí el día y el horario y tocá “Enviar por WhatsApp”. Te respondemos para confirmar tu turno."
+  },
+  {
+    pregunta: "¿Cuánto es la seña?",
+    respuesta: "La seña es del " + DATOS_NEGOCIO.seniaPorcentaje + "% del costo del servicio. Cuando nos enviás tu pedido por WhatsApp te pasamos los datos para abonarla."
+  },
+  {
+    pregunta: "¿Qué pasa si tengo que cancelar?",
+    respuesta: "Si cancelás con 2 o 3 días de anticipación, te devolvemos la seña. Si cancelás el mismo día, la seña (o el abono del servicio) no se devuelve."
+  },
+  {
+    pregunta: "¿Cuánto dura cada servicio?",
+    respuesta: "Cada servicio muestra su duración en la página de Precios, así podés organizar tu día."
+  },
+  {
+    pregunta: "¿El total del carrito es el precio final?",
+    respuesta: "Es un total estimado: los precios pueden cambiar y algunos son “desde”. Te confirmamos el valor final por WhatsApp."
+  },
+  {
+    pregunta: "¿Dónde están y en qué horario atienden?",
+    respuesta: "Estamos en " + DATOS_NEGOCIO.direccion + ". Horario de atención: " + DATOS_NEGOCIO.horarios.toLowerCase() + "."
+  }
+];
+
+// Cuidados antes y después de cada categoría (recomendaciones generales)
+var CUIDADOS = {
+  "unas": {
+    antes: [
+      "Avisanos si tenés hongos, heridas o alguna infección en uñas, manos o pies: en ese caso no se puede trabajar.",
+      "No te cortes ni te saques las cutículas antes del turno.",
+      "Si tenés esmalte o material de otro servicio, avisanos al reservar."
+    ],
+    despues: [
+      "Usá guantes para lavar, limpiar o usar productos químicos.",
+      "No uses las uñas como herramienta (abrir latas, despegar etiquetas).",
+      "Hidratá las cutículas con aceite o crema todos los días.",
+      "No te arranques el material: pedí turno para retirarlo."
+    ]
+  },
+  "masajes": {
+    antes: [
+      "Evitá comidas pesadas 1 o 2 horas antes.",
+      "Avisanos si estás embarazada o tenés lesiones, várices o alguna condición de salud.",
+      "Vení con ropa cómoda y llegá unos minutos antes para relajarte."
+    ],
+    despues: [
+      "Tomá agua durante el día.",
+      "Evitá esfuerzos intensos y el alcohol el resto del día.",
+      "Descansá: es normal sentir el cuerpo muy relajado."
+    ]
+  },
+  "drenaje": {
+    antes: [
+      "Avisanos si tenés problemas circulatorios, trombosis, si estás embarazada o alguna condición de salud.",
+      "Vení hidratada y con ropa cómoda."
+    ],
+    despues: [
+      "Tomá bastante agua.",
+      "Evitá el exceso de sal y el alcohol durante el día.",
+      "Hacé una caminata suave si podés: ayuda a la circulación."
+    ]
+  },
+  "cejas-pestanas": {
+    antes: [
+      "Vení sin maquillaje en la zona de ojos y cejas.",
+      "Avisanos si tenés alergias a tinturas, pegamentos o cosméticos.",
+      "No te hagas otro tratamiento en esa zona los días previos."
+    ],
+    despues: [
+      "Evitá mojar la zona, el vapor y el sauna durante las primeras 24 horas.",
+      "No frotes ni te rasques los ojos o las cejas.",
+      "Peiná las pestañas con el cepillito y evitá productos oleosos cerca de los ojos.",
+      "Para quitar el maquillaje usá productos suaves, sin frotar."
+    ]
+  },
+  "facial": {
+    antes: [
+      "Avisanos si usás ácidos, retinoides u otros tratamientos para la piel, o si estás embarazada o tenés alergias.",
+      "Vení con la piel limpia, sin exfoliarla los días previos."
+    ],
+    despues: [
+      "Usá protector solar todos los días y evitá el sol directo.",
+      "No te toques ni te exfolies la piel los días siguientes.",
+      "Hidratá tu piel y seguí las indicaciones que te dé la profesional."
+    ]
+  },
+  "corporal": {
+    antes: [
+      "Vení hidratada y evitá comidas pesadas justo antes.",
+      "Avisanos si estás embarazada o tenés alguna condición de salud, así elegimos lo mejor para vos."
+    ],
+    despues: [
+      "Tomá agua durante el día.",
+      "Evitá el sol directo en la zona tratada.",
+      "Seguí las indicaciones que te dé la profesional para cuidar los resultados."
+    ]
+  },
+  "trenzas": {
+    antes: [
+      "Vení con el cabello limpio, seco y bien desenredado.",
+      "Avisanos si tenés el cuero cabelludo sensible o alergia al kanekalon.",
+      "Reservá tiempo: algunos peinados llevan varias horas."
+    ],
+    despues: [
+      "Mantené el cuero cabelludo limpio con shampoo suave.",
+      "Secá bien las trenzas para evitar la humedad.",
+      "Dormí con un pañuelo o gorro de satén para cuidarlas.",
+      "Si sentís dolor o picazón intensa, consultanos."
+    ]
+  }
+};

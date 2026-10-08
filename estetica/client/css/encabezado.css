@@ -420,3 +420,44 @@
   font-size: 0.85rem;
   color: var(--color-texto-suave);
 }
+
+/* Pantallas medianas (tablet): menú más compacto para que entre todo en la barra */
+@media (min-width: 768px) and (max-width: 1099px) {
+  .barra {
+    gap: 0.75rem;
+  }
+
+  .logo-imagen {
+    height: 3.2rem;
+  }
+
+  .nav {
+    gap: 0.85rem;
+  }
+
+  .nav-enlace {
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+  }
+
+  .boton-turno {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.8rem;
+  }
+
+  .barra-acciones {
+    gap: 0.4rem;
+  }
+}
+
+.nav-enlace {
+  white-space: nowrap;
+}
+
+.logo-imagen {
+  max-width: none;
+}
+
+.boton-turno {
+  white-space: nowrap;
+}

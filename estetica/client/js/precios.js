@@ -68,14 +68,14 @@ function CrearCategoria(servicio) {
   seccion.id = servicio.id;
   seccion.dataset.categoria = servicio.id;
 
-  // El nombre de la categoría está escrito dentro de la imagen del banner
-  seccion.appendChild(CrearElemento("h2", "solo-lectores", servicio.nombre));
+  // Banner con la foto de la categoría (img/tarjeta-<id>.jpg), fondo oscuro suave y el nombre encima
   var portada = CrearElemento("div", "categoria-portada reveal reveal-zoom");
   var imagen = CrearElemento("img");
-  imagen.src = servicio.imagen;
+  imagen.src = "img/tarjeta-" + servicio.id + ".jpg";
   imagen.alt = "";
   imagen.loading = "lazy";
   portada.appendChild(imagen);
+  portada.appendChild(CrearElemento("h2", "categoria-nombre", servicio.nombre));
   seccion.appendChild(portada);
   seccion.appendChild(CrearElemento("p", "categoria-descripcion reveal", servicio.descripcion));
 

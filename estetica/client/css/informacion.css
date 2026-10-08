@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Información: preguntas frecuentes, cuidados y política de privacidad
+   ========================================================================== */
+
+/* Preguntas frecuentes */
+.preguntas-lista {
+  display: flex;
+  max-width: 48rem;
+  margin-inline: auto;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pregunta {
+  border: 1px solid var(--color-linea);
+  border-radius: 1rem;
+  background: var(--color-superficie);
+  transition: box-shadow 0.25s;
+}
+
+.pregunta[open] {
+  box-shadow: var(--sombra-suave);
+}
+
+.pregunta-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  font-weight: 700;
+  color: var(--rosa-900);
+  list-style: none;
+  cursor: pointer;
+}
+
+.pregunta-titulo::-webkit-details-marker {
+  display: none;
+}
+
+.pregunta-titulo::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--rosa-600);
+  transition: transform 0.25s;
+}
+
+.pregunta[open] .pregunta-titulo::after {
+  transform: rotate(45deg);
+}
+
+.pregunta-respuesta {
+  padding: 0 1.25rem 1.1rem;
+  color: var(--color-texto-suave);
+}
+
+/* Cuidados: una tarjeta por categoría */
+.cuidados-lista {
+  display: grid;
+  gap: 1.25rem;
+  padding-block: 2.5rem 1rem;
+}
+
+@media (min-width: 768px) {
+  .cuidados-lista {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.cuidado {
+  padding: 1.5rem;
+  border: 1px solid var(--color-linea);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  box-shadow: var(--sombra-suave);
+}
+
+.cuidado-titulo {
+  margin-bottom: 1rem;
+  font-family: var(--fuente-titulo);
+  font-size: 1.5rem;
+  color: var(--rosa-700);
+}
+
+.cuidado-subtitulo {
+  margin-block: 1rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rosa-900);
+}
+
+.cuidado-subtitulo:first-of-type {
+  margin-top: 0;
+}
+
+.cuidado-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cuidado-items li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: var(--color-texto-suave);
+}
+
+.cuidado-items li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  font-size: 0.7rem;
+  line-height: 1.9;
+  color: var(--rosa-500);
+}
+
+.nota-pagina {
+  max-width: 48rem;
+  margin: 1rem auto 3rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--color-texto-suave);
+}
+
+/* Texto largo (política de privacidad) */
+.texto-legal {
+  max-width: 46rem;
+  padding-block: 2.5rem 4rem;
+}
+
+.texto-legal h2 {
+  margin-block: 2rem 0.5rem;
+  font-family: var(--fuente-titulo);
+  font-size: 1.35rem;
+  color: var(--rosa-700);
+}
+
+.texto-legal p,
+.texto-legal li {
+  color: var(--color-texto-suave);
+}
+
+.texto-legal p + p {
+  margin-top: 0.75rem;
+}
+
+.texto-legal ul {
+  display: flex;
+  margin-top: 0.5rem;
+  padding-left: 1.2rem;
+  flex-direction: column;
+  gap: 0.4rem;
+  list-style: disc;
+}
+
+.texto-legal a {
+  color: var(--rosa-700);
+  font-weight: 700;
+}
+
+.texto-legal-fecha {
+  font-size: 0.85rem;
+  font-style: italic;
+}
